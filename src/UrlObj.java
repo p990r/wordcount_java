@@ -9,10 +9,7 @@ import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class UrlObj {
     private URL url;
@@ -56,23 +53,30 @@ public class UrlObj {
     }
 
     public static String removeTags(String string) {
+        return string.replaceAll("<[^>]*>", " ");
+    }
+
+    public static String removeTabs(String string) {
+        return string.replaceAll("\t", " ");
+    }
+
+    public static String textToWords(String string) {
         string = removeScriptTags(string);
-        string = string.replaceAll("<[^>]*>", " ");
+        string = removeTags(string);
+        string = removeTabs(string);
         return string;
     }
 
-    public static String textToWords(String string){
-        string = removeTags(string);
-        string = string.replaceAll("\t", " ");
-        return string;
+    public static List<String> stringToList(String string) {
+        string = string.toLowerCase();
+        String[] stringList = string.split("[^a-z]");
+        return Arrays.asList(stringList);
     }
 
     public void makeWordsList() throws IOException {
         getHtmlCode();
         String text = textToWords(this.html_code);
-        text = text.toLowerCase();
-        String[] stringList = text.split("[^a-z]");
-        this.wordsList.addAll(Arrays.asList(stringList));
+        this.wordsList.addAll(stringToList(text));
     }
 
     public void makeSet(){

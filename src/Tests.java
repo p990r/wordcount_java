@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.Arrays;
+import java.util.List;
 
 public class Tests {
     String[] urls;
@@ -48,10 +50,26 @@ public class Tests {
         String result = UrlObj.removeTags(text);
         assertEquals("a b c d", result);
     }
+
+    @Test
+    public void testRemoveTabs(){
+        String text = "\t\t";
+        String result = UrlObj.removeTabs(text);
+        assertEquals("  ", result);
+    }
+
     @Test
     public void testTextToWords(){
-        String text = "\t\t<a>";
+        String text = "<script>This part should be removed</script><a><br>\t\t<a>";
         String result = UrlObj.textToWords(text);
-        assertEquals("   ", result);
+        assertEquals("     ", result);
+    }
+
+    @Test
+    public void testStringToList(){
+        String text = "AAA bc9d";
+        List<String> result = UrlObj.stringToList(text);
+        List<String> expected = Arrays.asList(new String[]{"aaa", "bc", "d"});
+        assertEquals(expected, result);
     }
 }

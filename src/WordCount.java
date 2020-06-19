@@ -59,12 +59,6 @@ public class WordCount {
                 e.printStackTrace();
             }
         });
-
-        for(int i=0; i<10; i++){
-            Set temp = urlToSet(urls.get(i));
-            unionSet.addAll(temp);
-        }
-
         return unionSet;
     }
 
